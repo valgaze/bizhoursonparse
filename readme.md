@@ -22,16 +22,15 @@ See a working demo [here](http://bizhours.parseapp.com)
 To get up and running you'll need three things:
 1. An account with www.parse.com
 2. [businessHours.js](https://github.com/gEndelf/jquery.businessHours)
-4. [jquery.timepicker](http://jonthornton.github.io/jquery-timepicker/|)
-
-It is pretty straightforward try create-object.html, 
+3. [jquery.timepicker](http://jonthornton.github.io/jquery-timepicker/|)
 
 
+Installation
+----------
+Prety straight forward, just pop your Parse.com application & javascript keys and inside **./js/parameterhandler.js** 
 
-License
-----
-
-MIT
-
-
+```sh
+var parse_app_id = "application_id_here"
+var parse_javascript_id = "javascript_id_here"
+```
     

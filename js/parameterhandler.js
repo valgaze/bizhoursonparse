@@ -1,6 +1,6 @@
 
-var parse_app_id = "TWuq2DAtFVsIWPrZ71YfcnV2Bs31U8Pxuo3ovTyq"
-var parse_javascript_id = "QDWbd2RMEW3F5YHE798vPvGB9X45unO6kcRgztfT"
+var parse_app_id = "application_id_here"
+var parse_javascript_id = "javascript_id_here"
 
 //PARAMETER CODE FROM HERE: http://www.jquerybyexample.net/2012/05/how-to-get-querystring-value-using.html
 //Usage: you have page.html?param1=string&param2=string2&param3=string3
