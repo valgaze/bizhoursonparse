@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add business hours</title>
+  <link data-turbolinks-track="true" href="css/bootstrap.css" media="all" rel="stylesheet" />
+  <link data-turbolinks-track="true" href="./css/base.css" media="all" rel="stylesheet" />
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css'>
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./css/jquery.businessHours.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.15.min.js"></script>
+  <script type="text/javascript" src="./js/bootstrap.js"></script>
+  <script src="./js/parameterhandler.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/jquery.businessHours.js"></script>
+  <script type="text/javascript" src="./js/jquery.timepicker.js"></script>
+      
+  
+
+
+<script type="text/javascript">
+
+
+
+//--- SET THE GLOBAL API keys
+Parse.initialize(parse_app_id, parse_javascript_id);
+//---SET THE GLOBAL API keys
+
+$(document).ready(function() {
+ 
+
+
+//Build hours modal, this is populated with default values M-F. We'll tweak by just having Monday open so they understand what to do
+
+var start = [
+                {"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},
+                {"isActive":false,"timeFrom":null,"timeTill":null},
+                {"isActive":false,"timeFrom":null,"timeTill":null},
+                {"isActive":false,"timeFrom":null,"timeTill":null},
+                {"isActive":false,"timeFrom":null,"timeTill":null},
+                {"isActive":false,"timeFrom":null,"timeTill":null},
+                {"isActive":false,"timeFrom":null,"timeTill":null}]
+
+
+        var b3 = $("#businesshoursdiv");
+        var businessHoursManagerBootstrap = b3.businessHours({
+            postInit:function(){
+                b3.find('.operationTimeFrom, .operationTimeTill').timepicker({
+                    'timeFormat': 'g:ia',
+                    'step': 30,
+                    'minTime': '09:00',
+                    'maxTime': '20:30',
+
+                });
+            }, operationTime: start,
+            dayTmpl: '<div class="dayContainer" style="width:80px;">' +
+                    '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"/></div>' +
+                    '<div class="weekday"></div>' +
+                    '<div class="operationDayTimeContainer">' +
+                    '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""/></div>' +
+                    '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""/></div>' +
+                    '</div></div>'
+        });
+
+//end hours modal
+
+//Create object click handler
+$("#createobject").click(function(){
+
+
+    var newobj = new Parse.Object("objects");
+    newobj.set("name",document.getElementById("name").value );
+    
+//Need to do something special for hours start by making an empty array of objects
+var hours = []
+
+//The widget has a format it likes, and we are using a different format inside Parse.com
+
+
+                    //Do monday
+                    var mondayStatus = businessHoursManagerBootstrap.serialize()[0].isActive
+                    var mondayOpen = businessHoursManagerBootstrap.serialize()[0].timeFrom
+                    var mondayClose = businessHoursManagerBootstrap.serialize()[0].timeTill
+                    var mondayArray = { "day" : "monday", "open"  : mondayOpen , "close"  : mondayClose, "status" : mondayStatus}
+
+                    hours.splice(0,0,mondayArray)
+
+
+                    //Do tuesday
+                    var tuesdayStatus = businessHoursManagerBootstrap.serialize()[1].isActive
+                    var tuesdayOpen = businessHoursManagerBootstrap.serialize()[1].timeFrom
+                    var tuesdayClose = businessHoursManagerBootstrap.serialize()[1].timeTill
+                    var tuesdayArray = { "day" : "tuesday", "open"  : tuesdayOpen , "close"  : tuesdayClose, "status" : tuesdayStatus}
+
+                    hours.splice(1,0,tuesdayArray)
+
+                    //Do Wednesday
+                    var wednesdayStatus = businessHoursManagerBootstrap.serialize()[2].isActive
+                    var wednesdayOpen = businessHoursManagerBootstrap.serialize()[2].timeFrom
+                    var wednesdayClose = businessHoursManagerBootstrap.serialize()[2].timeTill
+                    var wednesdayArray = { "day" : "Wednesday", "open"  : wednesdayOpen , "close"  : wednesdayClose, "status" : wednesdayStatus}
+
+                    hours.splice(2,0,wednesdayArray)
+
+                    //Do thursday
+                    var thursdayStatus = businessHoursManagerBootstrap.serialize()[3].isActive
+                    var thursdayOpen = businessHoursManagerBootstrap.serialize()[3].timeFrom
+                    var thursdayClose = businessHoursManagerBootstrap.serialize()[3].timeTill
+                    var thursdayArray = { "day" : "thursday", "open"  : thursdayOpen , "close"  : thursdayClose, "status" : thursdayStatus}
+
+                    hours.splice(3,0,thursdayArray)
+
+                    //Do friday
+                    var fridayStatus = businessHoursManagerBootstrap.serialize()[4].isActive
+                    var fridayOpen = businessHoursManagerBootstrap.serialize()[4].timeFrom
+                    var fridayClose = businessHoursManagerBootstrap.serialize()[4].timeTill
+                    var fridayArray = { "day" : "friday", "open"  : fridayOpen , "close"  : fridayClose, "status" : fridayStatus}
+
+                    hours.splice(4,0,fridayArray)
+
+                    //Do saturday
+                    var saturdayStatus = businessHoursManagerBootstrap.serialize()[5].isActive
+                    var saturdayOpen = businessHoursManagerBootstrap.serialize()[5].timeFrom
+                    var saturdayClose = businessHoursManagerBootstrap.serialize()[5].timeTill
+                    var saturdayArray = { "day" : "saturday", "open"  : saturdayOpen , "close"  : saturdayClose, "status" : saturdayStatus}
+
+                    hours.splice(5,0,saturdayArray)
+
+                    //Do sunday
+                    var sundayStatus = businessHoursManagerBootstrap.serialize()[6].isActive
+                    var sundayOpen = businessHoursManagerBootstrap.serialize()[6].timeFrom
+                    var sundayClose = businessHoursManagerBootstrap.serialize()[6].timeTill
+                    var sundayArray = { "day" : "sunday", "open"  : sundayOpen , "close"  : sundayClose, "status" : sundayStatus}
+
+                    hours.splice(6,0,sundayArray)
+
+
+var name = $("#name").val();
+  newobj.set("name",name);
+  newobj.set("hours",hours);
+  newobj.save();
+
+
+
+    $("#createobject").prop("disabled",true);
+    $("#notice").html('Object created, see it on <a href="./manage-objects.html">Your Object Dashboard</a>');
+
+
+});  //end click createobject
+
+
+
+
+
+}); //end document.ready
+</script>
+
+
+
+</head>
+
+
+<nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+              </div>
+              <ul class="nav navbar-nav navbar-left">
+                <li><a class="brandtextnavbartitle" href="./manage-objects.html">bizhours</a></li>
+              </ul>
+             
+              <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+</nav>
+<body>
+
+  <div class="container">
+<!--START CONTENT -->
+      <div class="row">
+
+        <div class="listing">
+          <h3><a href="./manage-objects.html"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a></h3>
+        </div>
+
+      </div> <!--/.row-->
+
+
+
+      
+
+
+      <div class ="row">
+            
+        <div class="listing">
+        
+            <span class="colorlabel">Venue Name:</span>
+
+            <input type="text" class="form-control" id="name" placeholder="Object label">
+
+        
+
+
+            <span class="colorlabel"> Hours </span>
+            
+            <div>
+            <a id="addhours" href="#" data-toggle="modal" data-target="#hoursmodal" class="btn btn-warning">Set Operating Hours</a>
+            </div>
+
+        </div><!--./listing -->
+      
+      </div><!--./row -->
+
+
+      <div class = "row" id="finisher">
+        <input class="btn btn-warning" id="createobject" type="submit" value="Create" />
+        <span id="notice"></span><!--/.notice div-->
+     </div>
+
+
+<!--END CONTENT -->
+  </div>
+</body>
+
+
+<!--Create modal -->
+
+<div class="modal fade" id="hoursmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="width:660px;height:250px">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myLargeModalLabel">Add your operating hours</h4>
+        </div>
+        <div class="modal-body">
+           <div id="businesshoursdiv" style="width:620px"></div>
+        </div>
+
+  
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+<!--End hours modal creation -->
+
+</html>
