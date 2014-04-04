@@ -14,7 +14,8 @@ Luckily a fantastic jQuery plugin/widget named businessHours.js by [gEndelf](htt
 - [demo](http://gendelf.github.io/jquery.businessHours/)
 
 
-Here I've plugged it into Parse.com to set and later update the business hours for an imaginary business.
+Here I've plugged it into Parse.com to set and later update the business hours for imaginary businesses. The key is figuring out how to properly save the array and transfer it between the Parse data storage and your array.
+
 
 
 See a working demo [here](http://bizhours.parseapp.com)
