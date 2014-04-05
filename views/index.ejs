@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>bizhours</title>
+  <link data-turbolinks-track="true" href="./css/bootstrap.css" media="all" rel="stylesheet" />
+  <link data-turbolinks-track="true" href="./css/base.css" media="all" rel="stylesheet" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css'>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.15.min.js"></script>
+
+  <script type="text/javascript" src="./js/bootstrap.js"></script>
+
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+
+
+//--Set API keys
+Parse.initialize("<%= parse_app_id %>","<%= parse_javascript_id %>");
+//--Set API keys
+
+
+
+
+
+function loadView(){
+
+var mygalleries = Parse.Object.extend("objects");
+var query = new Parse.Query(mygalleries);
+
+query.descending("updatedAt")
+    query.find({
+      success: function(results) {
+
+
+
+
+
+var div = document.getElementById('listing');
+div.innerHTML = ""
+
+//Edge case if they find their way to manage galleries page without any galleries. If no galleries it throws up an error
+
+
+
+
+if (results[0] == undefined){
+  div.innerHTML = div.innerHTML + '<div class="listing"><h3><a href="./create">+ Add New</a></h3></div>'
+
+
+} else{
+
+div.innerHTML = div.innerHTML + '<div class="listing"><h3><a href="./create">+ Add New</a></h3></div>'
+
+
+  for (var i = 0; i < results.length; i++) { 
+      var object = results[i];
+      //alert(object.id + ' - ' + object.get('name'));
+
+      
+div.innerHTML = div.innerHTML + '<div class="listing"><span class="objectTitle"><span id="namespan">' + object.get('name') + '</span><br><a href="./edit/'+object.id+'""><i class="fa fa-pencil-square-o"></i>&nbsp;Update information</a><br><a class="deleterecord" href="#" id="' + results[i].id + '"><i id="delete" class="fa fa-thumbs-down"></i>&nbsp;Delete</a></center></div><br>'
+
+    } //end for loop
+    
+} //End if statement for no galleries
+
+
+
+       },
+       error: function(object, error) 
+       {
+var div = document.getElementById('listing');
+div.innerHTML = "<br><Strong>There was an error loading your information</strong>"
+
+
+        alert('Whoops, here is the error: ' + error.description)
+       }
+    });
+
+}//end loadview
+
+loadView();
+
+
+
+$('#listing').on('click', '.deleterecord', function() { 
+var id = this.id
+
+
+  if (! confirm("Are you sure you want to delete this record?"))
+  {
+      
+      return false;
+  }
+  //Actual code to delete the object association from dbase (need to flush out w/ rest api request manually)
+  var mydriver = Parse.Object.extend("objects");
+  var query = new Parse.Query(mydriver);
+  query.get(id, {
+    success: function(myObj) {
+      myObj.destroy({});
+      loadView();
+
+    },
+    error: function(object, error) {
+
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+    }
+  });
+
+
+}); //end delete button handler
+
+
+
+});  //end document ready
+</script>
+
+</head>
+
+
+
+<nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+              </div>
+              <ul class="nav navbar-nav navbar-left">
+                <li><a class="brandtextnavbartitle" href="./">bizhours</a></li>
+              </ul>
+             
+              <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+</nav>
+
+
+<body>
+<!--BEGIN CONTENT -->
+<div class="container">   
+
+<div id="centerer">
+  <div id="listing">Loading...</div>
+</div>
+
+
+
+
+</div>
+<!--END CONTENT -->
+
+
+
+</body>
+</html>
