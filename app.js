@@ -38,25 +38,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-
-
-
-
 app.use('/img',express.static(path.join(__dirname, 'public/img')));
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 
-
 app.get('/create', function(req, res) {
-
   res.render('create', {parse_app_id: parse_app_id, parse_javascript_id:parse_javascript_id});
-
 });
 
 app.get('/', function(req, res) {
-
   res.render('index', {parse_app_id: parse_app_id, parse_javascript_id:parse_javascript_id});
-
 });
 
 app.get('/edit/:param', function(req, res) {
@@ -77,12 +68,8 @@ query.get(queryvalue,
 {
   success: function(objectQuery)
    {
-     
-
-
      if (!objectQuery){
      	res.render('no_object', {title: "Oops, no object by that name"});
-
      }
 
 	var namevar = objectQuery.get("name");
@@ -180,9 +167,6 @@ var start = [{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},
     });
 
 });
-
-
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

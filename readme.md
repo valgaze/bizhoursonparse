@@ -1,6 +1,8 @@
 Storing businss hours on Parse.com
 =========
 
+tl;dr: Here's a working demo: http://bizhours.parseapp.com
+
 Setting general operating hours for a business is a pretty thorny UI challenge. There are seven days in a week, there's an open/close time for each, some days are not even on the schedule at all. Depending on how it is set up, the user is on the hook for 14-21 discrete pieces of information.
 
 Many current approaches for setting operating hours leave a lot to be desired:
@@ -12,7 +14,6 @@ Other approaches are either too involved and complicated for an operation that h
 Luckily there exists a middleground in form of a fantastic jQuery plugin/widget named businessHours.js by [gEndelf](https://github.com/gEndelf) takes the best of both worlds and makes the process as painless as possible.
 - [github](https://github.com/gEndelf/jquery.businessHours)
 - [demo](http://gendelf.github.io/jquery.businessHours/)
-
 
 Here I've plugged it into Parse.com to set and later update the business hours for imaginary businesses. 
 
